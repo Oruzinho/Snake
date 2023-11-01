@@ -11,6 +11,7 @@ def move_snake():
         move_to = DIRECTIONS["left"]
     elif direction == "d":
         move_to = DIRECTIONS["right"]
+    return move_to
 
 
 def define_snake_position():
