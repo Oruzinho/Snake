@@ -1,31 +1,43 @@
-import random
-import operator
+from random import randrange as rnd
+from operator import add
+from sys import platform
+from os import system as sys
 from pytimedinput import timedInput
 
 
+def verify_os():
+    if platform == "win32" or platform == "cygwin":
+        clearcmd = "cls"
+    else:
+        clearcmd = "clear"
+    return clearcmd
+
+
 def controls():
-    control = input()
-    if control == "w":
-        direction = DIRECTIONS["up"]
-    elif control == "s":
-        direction = DIRECTIONS["down"]
-    elif control == "a":
-        direction = DIRECTIONS["left"]
-    elif control == "d":
-        direction = DIRECTIONS["right"]
+    global direction
+    txt, time = timedInput("", timeout=0.3)
+    match txt:
+        case "w":
+            direction = DIRECTIONS["up"]
+        case "s":
+            direction = DIRECTIONS["down"]
+        case "a":
+            direction = DIRECTIONS["left"]
+        case "d":
+            direction = DIRECTIONS["right"]
     return direction
 
 
 def create_snake():
-    snake_x = SCREEN_WIDTH // 2
-    snake_y = SCREEN_HEIGHT // 2
-    return [(snake_x + 3, snake_y), (snake_x + 2, snake_y), (snake_x + 1, snake_y)]
+    x, y = SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2
+    return [(x + 3, y), (x + 2, y), (x + 1, y)]
 
 
 def create_apple():
-    apple_x = random.randrange(1, SCREEN_WIDTH - 1)
-    apple_y = random.randrange(1, SCREEN_HEIGHT - 1)
-    return (apple_x, apple_y)
+    x, y = rnd(1, SCREEN_WIDTH - 1), rnd(1, SCREEN_HEIGHT - 1)
+    while (x, y) in snake:
+        x, y = SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2
+    return (x, y)
 
 
 def generate_screen():
@@ -42,22 +54,34 @@ def generate_screen():
             print("", end="\n")
 
 
-def move_snake():
+def update_screen():
     direction = controls()
     snake[2] = snake[1]
     snake[1] = snake[0]
-    snake[0] = tuple(map(operator.add, snake[0], direction))
+    snake[0] = tuple(map(add, snake[0], direction))
+
+
+def eat_apple():
+    global apple, eaten
+    if apple == snake[0]:
+        apple = create_apple()
+        eaten = True
 
 
 SCREEN_WIDTH = 32
 SCREEN_HEIGHT = 16
 SCREEN = [(col, row) for row in range(SCREEN_HEIGHT) for col in range(SCREEN_WIDTH)]
 DIRECTIONS = {"left": (-1, 0), "right": (1, 0), "up": (0, -1), "down": (0, 1)}
+direction = DIRECTIONS["right"]
 
 snake = create_snake()
 apple = create_apple()
+eaten = False
+
+clearcmd = verify_os()
 
 while True:
+    sys(clearcmd)
     generate_screen()
-    txt, time = timedInput("", timeout=0.3)
-    move_snake()
+    update_screen()
+    eat_apple()
