@@ -12,7 +12,7 @@ def clear_screen():
 
 def controls():
     global direction
-    txt, time = timedInput("", timeout=0.2)
+    txt, time = timedInput("", timeout=0.1)
     match txt:
         case "w":
             direction = DIRECTIONS["up"]
@@ -61,13 +61,14 @@ def create_apple():
 
 
 def generate_screen():
+    clear_screen()
     for cell in SCREEN:
         if cell == snake[0]:
-            print(color.GREEN + "O", end="")
+            print(color.LIGHTGREEN_EX + "O", end="")
         elif cell in snake[1:]:
-            print(color.GREEN + "o", end="")
+            print(color.LIGHTGREEN_EX + "o", end="")
         elif apple == cell:
-            print(color.RED + "a", end="")
+            print(color.LIGHTRED_EX + "a", end="")
         elif cell[0] in (0, SCREEN_WIDTH - 1) or cell[1] in (0, SCREEN_HEIGHT - 1):
             print(color.CYAN + "#", end="")
         else:
@@ -95,7 +96,6 @@ apple = create_apple()
 eaten = False
 
 while True:
-    clear_screen()
     generate_screen()
     move_snake()
     eat_apple()
