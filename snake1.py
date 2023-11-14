@@ -33,7 +33,7 @@ def print_field():
         elif cell == apple_pos:
             print("@", end="")
         else:
-            print(" ", end="")
+            print(".", end="")
         if cell[0] == FIELD_WIDTH - 1:
             print("", end="\n")
 
@@ -78,3 +78,10 @@ while True:
     print_field()
     update_snake()
     apple_collision()
+    if (
+        snake_body[0][0] in (0, FIELD_WIDTH - 1)
+        or snake_body[0][1] in (0, FIELD_HEIGHT - 1)
+        or snake_body[0] in snake_body[1:]
+    ):
+        os.system("cls")
+        break
