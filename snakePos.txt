@@ -1,0 +1,11 @@
+    O(x-4,y-2)O(x-3,y-2)O(x-2,y-2)O(x-1,y-2)O(x,y-2)
+O(x-7,y-1)O(x-6,y-1)O(x-5,y-1)O(x-4,y-1)O(x-3,y-1)O(x-2,y-1)O(x-1,y-1)O(x,y-1)
+O(x-8,y)O(x-7,y)O(x-6,y)O(x-5,y)O(x-4,y)O(x-3,y)O(x-2,y)O(x-1,y)O(x,y)
+O(x-7,y+1)O(x-6,y+1)O(x-5,y+1)O(x-4,y+1)O(x-3,y+1)O(x-2,y+1)O(x-1,y+1)O(x,y+1)
+    O(x-4,1+2)O(x-3,1+2)O(x-2,1+2)O(x-1,1+2)O(x,1+2)
+
+   OOO
+OOOOOOO
+OOOOOOOO
+OOOOOOO
+   OOO
