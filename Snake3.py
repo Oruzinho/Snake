@@ -4,7 +4,7 @@ from sys import platform
 from os import system as sys
 from pytimedinput import timedInput
 from colorama import Fore as color, init
-import pyfiglet
+from pyfiglet import figlet_format as ff
 
 
 # Verifies the user OS in order to determine which command is going to be used to erase the screen
@@ -34,7 +34,7 @@ def start_menu():
     erase_screen()
     text = "SNAKE.py"
     font = "banner3"
-    menu_text = pyfiglet.figlet_format(text, font)
+    menu_text = ff(text, font)
     print(color.LIGHTGREEN_EX + menu_text)
     input(color.LIGHTGREEN_EX + "> PRESS ANY BUTTON TO PLAY <")
     erase_screen()
@@ -59,7 +59,7 @@ def controls():
 # Creates the snake on the screen
 def create_snake():
     x, y = SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2
-    return [(x + 3, y), (x + 2, y), (x + 1, y)]
+    return [(x, y), (x - 1, y), (x - 2, y)]
 
 
 # Makes the snake move based on the direction provided by the player while calling the controls() function
@@ -84,7 +84,7 @@ def kill_snake():
         or snake[0][1] in (0, SCREEN_HEIGHT - 1)
         or snake[0] in snake[1:]
     ):
-        clear_screen()
+        erase_screen()
         return True
 
 
@@ -107,7 +107,7 @@ def generate_screen():
         elif apple == cell:
             print(color.LIGHTRED_EX + "a", end="")
         elif cell[0] in (0, SCREEN_WIDTH - 1) or cell[1] in (0, SCREEN_HEIGHT - 1):
-            print(color.CYAN + "#", end="")
+            print(color.LIGHTCYAN_EX + "#", end="")
         else:
             print(" ", end="")
         if cell[0] == SCREEN_WIDTH - 1:
@@ -153,5 +153,5 @@ while True:
     move_snake()
     eat_apple()
     grow_snake()
-    if kill_snake() == True:
+    if kill_snake():
         break
